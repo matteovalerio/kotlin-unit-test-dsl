@@ -9,7 +9,7 @@ import main.kotlin.end.models.Test
 class TestBuilder(private val title: String) {
     private val assertions = mutableListOf<Assertion>()
 
-    fun assert(title: String, block: () -> AssertionResult) {
+    fun should(title: String, block: () -> AssertionResult) {
         assertions += Assertion(title, block)
     }
 
