@@ -25,14 +25,15 @@ DevFest Venezia 2025
 
 - <div style="display:flex; align-items:center; gap:12px; justify-content: space-between">
     <span>Full Stack Software Engineer @ Kuama</span>
-    <a href="https://www.kuama.net/"><img src="/kuama.svg" alt="Kuama logo" style="height:16px"/></a>
+    <div style="display: flex; align-items: center"><img src="/kuama.svg" alt="Kuama logo" style="height:16px"/>
+  </div>
   </div>
 - <div style="display:flex; align-items:center; gap:12px; justify-content: space-between">
     <span>Author @ Hyperskill (JetBrains Academy)</span>
-  <a href="https://hyperskill.org/" style="display:flex; align-items:center; gap:4px">
+  <div style="display:flex; align-items:center; gap:4px">
     <img src="/hyperskill-logo.svg" alt="Hyperskill logo" style="height:16px"/>
     <img src="/hyperskill-title.svg" alt="Hyperskill logo" style="height:16px"/>
-  </a>
+  </div>
   </div>
 - Esperienza su web, mobile, desktop
 - Appassionato di developer experience e clean code

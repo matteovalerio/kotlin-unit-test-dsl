@@ -1,0 +1,34 @@
+<svg data-v-e6e680c1="" class="h-icon !align-middle" xmlns="http://www.w3.org/2000/svg" width="24"
+    height="24" fill="none" viewBox="0 0 24 24" data-component-name="alt-logo-icon-hyperskill"
+    style="height: 24px; width: 24px;">
+    <path fill="url(#uicons-hhpm89p86n)"
+        d="M20.571 21.086a1.2 1.2 0 0 1-1.2 1.2h-1.028a1.2 1.2 0 0 1-1.2-1.2V2.914a1.2 1.2 0 0 1 1.2-1.2h1.028a1.2 1.2 0 0 1 1.2 1.2v18.172Z"></path>
+    <path fill="url(#uicons-h5pqfvoo17)"
+        d="M13.714 9.086a1.2 1.2 0 0 1-1.2 1.2h-1.028a1.2 1.2 0 0 1-1.2-1.2V4.629a1.2 1.2 0 0 1 1.2-1.2h1.028a1.2 1.2 0 0 1 1.2 1.2v4.457Z"></path>
+    <path fill="url(#uicons-9abnxzxf5b)"
+        d="M6.857 15.943a1.2 1.2 0 0 1-1.2 1.2H4.63a1.2 1.2 0 0 1-1.2-1.2V8.057a1.2 1.2 0 0 1 1.2-1.2h1.028a1.2 1.2 0 0 1 1.2 1.2v7.886Z"></path>
+    <path fill="url(#uicons-w37nz9lpwd)"
+        d="M13.714 19.371a1.2 1.2 0 0 1-1.2 1.2h-1.028a1.2 1.2 0 0 1-1.2-1.2v-4.457a1.2 1.2 0 0 1 1.2-1.2h1.028a1.2 1.2 0 0 1 1.2 1.2v4.457Z"></path>
+    <defs>
+        <linearGradient id="uicons-hhpm89p86n" x1="19.473" x2="25.575" y1="6.484" y2="12.083"
+            gradientUnits="userSpaceOnUse">
+            <stop stop-color="#564DE2"></stop>
+            <stop offset="1" stop-color="#68AEFF"></stop>
+        </linearGradient>
+        <linearGradient id="uicons-h5pqfvoo17" x1="10.286" x2="16.159" y1="-.052" y2="4.76"
+            gradientUnits="userSpaceOnUse">
+            <stop stop-color="#6C63FF"></stop>
+            <stop offset="1" stop-color="#7AB7FE"></stop>
+        </linearGradient>
+        <linearGradient id="uicons-9abnxzxf5b" x1="5.913" x2="-.81" y1="19.012" y2="13.484"
+            gradientUnits="userSpaceOnUse">
+            <stop stop-color="#4BFFDF"></stop>
+            <stop offset="1" stop-color="#7AB7FE"></stop>
+        </linearGradient>
+        <linearGradient id="uicons-w37nz9lpwd" x1="13.119" x2="6.661" y1="24.533" y2="18.421"
+            gradientUnits="userSpaceOnUse">
+            <stop stop-color="#4BFFDF"></stop>
+            <stop offset="1" stop-color="#4D9FFF"></stop>
+        </linearGradient>
+    </defs>
+</svg>
