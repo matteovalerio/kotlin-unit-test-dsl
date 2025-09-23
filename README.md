@@ -1,12 +1,19 @@
 # Kotlin Unit Test DSL
 
-A simple Kotlin DSL for writing expressive unit tests.
+Content for Live at DevFest 2025 - Venice.
 
-## Example
+The repository contains a simple DSL for writing unit tests in Kotlin and the slides.
+
+## Example Kotlin DSL test
 ```kotlin
-test("Calculator") {
-    should("add numbers") {
-        expect(2 + 2).toBe(4)
+suite("Demo DSL Test") {
+    test("Basic sum tests") {
+        expect("1 + 1 should be 2") {
+            1 + 1 shouldBe 2
+        }
+        expect("1 + 1 should be 3") {
+            1 + 1 shouldBe 3
+        }
     }
 }
 ```

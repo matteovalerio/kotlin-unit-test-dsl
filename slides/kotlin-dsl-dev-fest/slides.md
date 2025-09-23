@@ -182,7 +182,7 @@ if (result != 4) error("Expected 4")
 suite("Calculator Suite") {
     test("Basic math") {
         expect("it adds numbers") {
-            2 + 2.shouldBe(4)
+            2 + 2 shouldBe 4
         }
     }
 }
