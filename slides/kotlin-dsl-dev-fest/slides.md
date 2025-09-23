@@ -1,7 +1,6 @@
 ---
 theme: seriph
 colorSchema: light
-class: text-center
 highlighter: shiki
 shikiTheme: github-light
 lineNumbers: true
@@ -9,13 +8,13 @@ fonts:
   code: "Fira Code"
 css: ./style.css
 layout: cover
-background: /banner.png
+class: cover-diag
+background: "linear-gradient(135deg, #7f52ff 0%, #c792ea 50%, #ff9800 100%)"
 ---
 
 # Costruire DSL in Kotlin
 
 ### Matteo Valerio
-
 Full-Stack Developer @ Kuama • Author @ Hyperskill (JetBrains Academy)  
 DevFest Venezia 2025
 
@@ -48,6 +47,74 @@ DevFest Venezia 2025
 
 ---
 
+
+# Esempio: Ktor
+
+```kotlin
+routing {
+    get("/") {
+        val name = "Ktor"
+        call.respondHtml(HttpStatusCode.OK) {
+            head {
+                title {
+                    +name
+                }
+            }
+            body {
+                h1 {
+                    +"Hello from $name!"
+                }
+            }
+        }
+    }
+}
+```
+
+---
+
+# Esempio: TeamCity configuration
+
+```kotlin
+object Build : BuildType({
+    name = "${DslContext.getParameter("BuildName", "Test Build")}"
+
+    script {
+        scriptContent = "echo Build Successful"
+    }
+
+    script {
+       scriptContent = "echo Deploy"
+       enabled = DslContext.getParameter(name = "Environment") != "Staging"
+    }
+
+})
+```
+
+---
+
+# Esempio: Gradle .kts
+
+```kotlin
+plugins {
+    `java-library`
+}
+
+dependencies {
+    api("junit:junit:4.13")
+    implementation("junit:junit:4.13")
+    testImplementation("junit:junit:4.13")
+}
+
+tasks {
+    test {
+        testLogging.showExceptions = true
+        useJUnit()
+    }
+}
+```
+
+---
+
 # Agenda
 
 1. Cos’è una DSL
@@ -60,36 +127,6 @@ DevFest Venezia 2025
 4. Confronto con codice imperativo
 5. Conclusioni
 6. Q&A
-
----
-
-# Il problema: test imperativi
-
-```kotlin
-val result = 2 + 2
-if (result != 4) error("Expected 4")
-```
-
-- Ripetitivo
-- Messaggi poco chiari
-- Nessuna struttura
-
----
-
-# DSL: il risultato che vogliamo
-
-```kotlin
-suite("Calculator Suite") {
-    test("Basic math") {
-        should("adds numbers") {
-            2 + 2.shouldBe(4)
-        }
-    }
-}
-
-```
-
-Leggibile, espressivo, sicuro ✌️
 
 ---
 
@@ -126,22 +163,66 @@ Lo scope diventa l'oggetto su cui lavori
 
 ---
 
-# Step 1: `expect`
+# Il problema: test imperativi
+
+```kotlin
+val result = 2 + 2
+if (result != 4) error("Expected 4")
+```
+
+- Ripetitivo
+- Messaggi poco chiari
+- Nessuna struttura
+
+---
+
+# DSL: il risultato che vogliamo
+
+```kotlin
+suite("Calculator Suite") {
+    test("Basic math") {
+        expect("it adds numbers") {
+            2 + 2.shouldBe(4)
+        }
+    }
+}
+
+```
+
+Leggibile, espressivo, sicuro ✌️
+
+---
+
+# Step 1: `Assertions`
 
 ```kotlin
 expect(2 + 2).toBe(4)
 ```
 
 - Teoria: incapsulare l'assert
-- Live coding: implementiamo `AssertionResult` + `Expect<T>` + `shouldBe`
+- Live coding
+
+<!--
+fun <T> expect(actual: T): T = actual
+
+fun <T> T.toBe(expected: T): AssertionResult =
+    if (expected == this) ok("OK: $expected == $this") else fail(
+        "FAIL: $expected != $this"
+    )
+
+fun main() {
+    println(expect(2 + 2).toBe(4).message)
+    println(expect(2 + 2).toBe(5).message)
+}
+-->
 
 ---
 
-# Step 2: `should`
+# Step 2: `expect`
 
 ```kotlin
-should("add numbers") {
-    expect(2 + 2).toBe(4)
+expect("it add numbers") {
+    2 + 2 shouldBe 4
 }
 ```
 
@@ -171,7 +252,7 @@ test("Calculator") {
 ```kotlin
 test("Calculator") {
     should("outer") {
-        should("inner") { expect(1 + 1).toBe(2) } // allowed 😱
+        should("inner") { 1 + 1 shouldBe 2 } // allowed 😱
     }
 }
 ```
@@ -215,7 +296,9 @@ if (2 + 2 != 4) error("Expected 4")
 
 ```kotlin
 test("Calculator") {
-    should("adds numbers") { expect(2 + 2).shouldBe(4) }
+    should("adds numbers") { 
+        2 + 2 shouldBe 4 
+    }
 }
 
 ```

@@ -7,7 +7,7 @@ import main.kotlin.start.models.Test
 class TestBuilder(private val title: String) {
     private val _assertions = mutableListOf<Assertion>()
 
-    fun should(title: String, block: () -> AssertionResult) {
+    fun expect(title: String, block: () -> AssertionResult) {
         TODO("implement this function")
     }
 
