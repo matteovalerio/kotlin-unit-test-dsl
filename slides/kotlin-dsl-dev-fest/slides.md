@@ -15,6 +15,7 @@ background: "linear-gradient(135deg, #7f52ff 0%, #c792ea 50%, #ff9800 100%)"
 # Costruire DSL in Kotlin
 
 ### Matteo Valerio
+
 Full-Stack Developer @ Kuama • Author @ Hyperskill (JetBrains Academy)  
 DevFest Venezia 2025
 
@@ -47,9 +48,7 @@ DevFest Venezia 2025
 
 ---
 
-
 # Esempio: Ktor
-
 ```kotlin
 routing {
     get("/") {
@@ -83,8 +82,8 @@ object Build : BuildType({
     }
 
     script {
-       scriptContent = "echo Deploy"
-       enabled = DslContext.getParameter(name = "Environment") != "Staging"
+        scriptContent = "echo Deploy"
+        enabled = DslContext.getParameter(name = "Environment") != "Staging"
     }
 
 })
@@ -170,9 +169,19 @@ val result = 2 + 2
 if (result != 4) error("Expected 4")
 ```
 
-- Ripetitivo
-- Messaggi poco chiari
-- Nessuna struttura
+<ul>
+    <li>Ripetitivo</li>
+    <v-click>
+    <li>
+        Messaggi poco chiari
+    </li>
+    </v-click>
+    <v-click>
+        <li>
+        Nessuna struttura
+        </li>
+    </v-click>
+</ul>
 
 ---
 
@@ -221,7 +230,7 @@ fun main() {
 # Step 2: `expect`
 
 ```kotlin
-expect("it add numbers") {
+expect("it adds two numbers") {
     2 + 2 shouldBe 4
 }
 ```
@@ -280,7 +289,7 @@ Ora il compilatore impedisce errori di scope ✅
 
 # Wrap-up
 
-- Eseguiamo il codice in /end
+- Vediamo la versione completa in /end”
 
 ---
 
@@ -296,8 +305,8 @@ if (2 + 2 != 4) error("Expected 4")
 
 ```kotlin
 test("Calculator") {
-    should("adds numbers") { 
-        2 + 2 shouldBe 4 
+    should("adds numbers") {
+        2 + 2 shouldBe 4
     }
 }
 
@@ -309,14 +318,49 @@ test("Calculator") {
 
 - Espressività
 - Sicurezza
-- Manutebilità
+- Manutenibilità
 - Estendibilità (matcher personalizzati, before/after...)
 
 ---
 
 # Q&A
 
-### Domande?
+```kotlin {monaco}
+while(true) {
+    audience.ask()
+    me.tryAnswer()
+}
+```
 
-- 📂 Repo su GitHub con esempio completo https://github.com/matteovalerio/kotlin-unit-test-dsl
-- 📱 LinkedIn: linkedin.com/in/matteo-valerio-9336611b9/
+<div style="text-align:center; margin-top:1em; font-size:3rem">
+  ❓💬
+</div>
+
+---
+
+# Contatti
+
+<div style="display:flex; justify-content:space-around; margin-top:2em">
+
+<div style="text-align:center">
+  <img src="/qr-code-github.png" style="height:180px"/>
+  <div style="margin-top:10px; color:#7f52ff; font-weight:600">GitHub</div>
+</div>
+
+<div style="text-align:center">
+  <img src="/qr-code-linkedin.png" style="height:180px"/>
+  <div style="margin-top:10px; color:#ff9800; font-weight:600">LinkedIn</div>
+</div>
+
+</div>
+
+---
+
+# Thank you!
+
+```kotlin {monaco}
+fun main() = println("Thanks DevFest Venezia ❤️")
+```
+
+
+
