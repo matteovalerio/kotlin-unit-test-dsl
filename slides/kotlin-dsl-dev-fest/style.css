@@ -39,6 +39,15 @@
     text-shadow: 0 2px 22px rgba(0, 0, 0, .28)
 }
 
+.slidev-layout.cover h1 {
+    animation: popIn 900ms cubic-bezier(.2,.8,.2,1);
+}
+@keyframes popIn {
+    0% { transform: translateY(20px) scale(.95); opacity:0 }
+    100% { transform: translateY(0) scale(1); opacity:1 }
+}
+
+
 
 /* Spaziature generali per dare aria al codice */
 .slidev-layout pre code {

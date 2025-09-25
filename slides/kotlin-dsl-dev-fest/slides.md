@@ -15,15 +15,16 @@ background: "linear-gradient(135deg, #7f52ff 0%, #c792ea 50%, #ff9800 100%)"
 # Costruire DSL in Kotlin
 
 ### Matteo Valerio
+
 Full-Stack Developer @ Kuama • Author @ Hyperskill (JetBrains Academy)  
 DevFest Venezia 2025
 
 ---
 
-# Chi sono
+# Chi sono - Matteo Valerio
 
 - <div style="display:flex; align-items:center; gap:12px; justify-content: space-between">
-    <span>Full Stack Software Engineer @ Kuama</span>
+    <span>Full Stack Developer @ Kuama</span>
     <div style="display: flex; align-items: center"><img src="/kuama.svg" alt="Kuama logo" style="height:16px"/>
   </div>
   </div>
@@ -35,21 +36,43 @@ DevFest Venezia 2025
   </div>
   </div>
 - Esperienza su web, mobile, desktop
-- Appassionato di developer experience e clean code
+- Appassionato di developer experience
+
+---
+
+# Agenda
+
+1. Perché parlare di DSL? 
+2. Cos’è una DSL
+3. Strumenti Kotlin (builder pattern, lambda con receiver)
+4. Caso pratico: mini framework di test
+    - `expect` + infix matchers
+    - `should`
+    - `test`
+    - `@DslMarker`
+5. Confronto con codice imperativo
+6. Conclusioni
+7. Q&A
 
 ---
 
 # Perché parlare di DSL?
 
-- Configurazioni o test **verbosi e ripetitivi**
+- Configurazioni o codice **verboso e ripetitivo**
 - Codice difficile da leggere e mantenere
 - Una DSL rende il codice **più vicino al linguaggio del dominio**
 
 ---
 
+# Cos’è una DSL?
+
+- Domain Specific Language = codice che sembra un linguaggio dedicato
+- Obiettivo: rendere il codice descrittivo e chiaro
+- Internal vs External DSL
+
+---
 
 # Esempio: Ktor
-
 ```kotlin
 routing {
     get("/") {
@@ -83,8 +106,8 @@ object Build : BuildType({
     }
 
     script {
-       scriptContent = "echo Deploy"
-       enabled = DslContext.getParameter(name = "Environment") != "Staging"
+        scriptContent = "echo Deploy"
+        enabled = DslContext.getParameter(name = "Environment") != "Staging"
     }
 
 })
@@ -115,49 +138,36 @@ tasks {
 
 ---
 
-# Agenda
-
-1. Cos’è una DSL
-2. Strumenti Kotlin (builder pattern, lambda con receiver)
-3. Caso pratico: mini framework di test
-    - `expect` + infix matchers
-    - `should`
-    - `test`
-    - `@DslMarker`
-4. Confronto con codice imperativo
-5. Conclusioni
-6. Q&A
-
----
-
-# Cos’è una DSL?
-
-- Domain Specific Language = codice che sembra un linguaggio dedicato
-- Esempi in Kotlin: apply { ... }, buildString { ... }, Compose
-- Obiettivo: rendere il codice descrittivo e chiaro
-
----
-
 # Strumento 1: Builder pattern
 
 ```kotlin
-fun config(block: ConfigBuilder.() -> Unit) =
-    ConfigBuilder().apply(block).build()
+ConfigBuilder().apply(block).build()
 
 ```
 
 Permette di costruire API fluide e leggibili
 
+<img src="./lego-builder.jpg" height="200" width="400" />
+
 ---
 
 # Strumento 2: Lambda con receiver
 
+<span v-click-hide>
 ```kotlin
+fun config(myConfig: (builder: ConfigBuilder) -> Unit)
+```
+</span v-click-hide>
+<span v-click>
+```kotlin
+fun config(myConfig: ConfigBuilder.() -> Unit)
+
 config {
     db { url = "postgres://..." }
     server { port = 8080 }
 }
 ```
+</span v-click>
 
 Lo scope diventa l'oggetto su cui lavori
 
@@ -166,13 +176,25 @@ Lo scope diventa l'oggetto su cui lavori
 # Il problema: test imperativi
 
 ```kotlin
+println("Calculator suite")
+println("Test basic math")
 val result = 2 + 2
-if (result != 4) error("Expected 4")
+if (result != 4) throw Error("Expected 4")
 ```
 
-- Ripetitivo
-- Messaggi poco chiari
-- Nessuna struttura
+<ul>
+    <li>Ripetitivo</li>
+    <v-click>
+    <li>
+        Messaggi poco chiari
+    </li>
+    </v-click>
+    <v-click>
+        <li>
+        Nessuna struttura
+        </li>
+    </v-click>
+</ul>
 
 ---
 
@@ -193,36 +215,40 @@ Leggibile, espressivo, sicuro ✌️
 
 ---
 
-# Step 1: `Assertions`
+# Step 1: `Assertions` e `expect` 
 
 ```kotlin
-expect(2 + 2).toBe(4)
+expect("it adds two numbers") {
+    (2 + 2).shouldBe(4)
+}
 ```
 
-- Teoria: incapsulare l'assert
+- Incapsulare l'assert
 - Live coding
 
 <!--
 fun <T> expect(actual: T): T = actual
 
-fun <T> T.toBe(expected: T): AssertionResult =
+fun <T> T.shouldBe(expected: T): AssertionResult =
     if (expected == this) ok("OK: $expected == $this") else fail(
         "FAIL: $expected != $this"
     )
 
 fun main() {
-    println(expect(2 + 2).toBe(4).message)
-    println(expect(2 + 2).toBe(5).message)
+    println(expect(2 + 2).shouldBe(4).message)
+    println(expect(2 + 2).shouldBe(5).message)
 }
 -->
 
 ---
 
-# Step 2: `expect`
+# Step 2: `test`
 
 ```kotlin
-expect("it add numbers") {
-    2 + 2 shouldBe 4
+test("it adds two numbers") {
+    expect("it adds two numbers") {
+        (2 + 2).shouldBe(4)
+    }
 }
 ```
 
@@ -231,13 +257,21 @@ expect("it add numbers") {
 
 ---
 
-# Step 3: `test`
+# Step 3: `suite`
 
 ```kotlin
 
-test("Calculator") {
-    should("adds numbers") { 2 + 2.shouldBe(4) }
-    should("divides with remainder") { 7 % 3.shouldBe(1) }
+suite("Calculator") {
+    test("it adds two numbers") {
+        expect("it adds two numbers") {
+            (2 + 2).shouldBe(4)
+        }
+    }
+    test("divides with remainder") {
+        expect("7 % 3 has 1 remainder") {
+            7 % 3.shouldBe(1)
+        }
+    }
 }
 
 ```
@@ -251,13 +285,13 @@ test("Calculator") {
 
 ```kotlin
 test("Calculator") {
-    should("outer") {
-        should("inner") { 1 + 1 shouldBe 2 } // allowed 😱
+    expect("outer") {
+        expect("inner") { 1 + 1 shouldBe 2 } // allowed 😱
     }
 }
 ```
 
-- Ambiguità: quale `should`?
+- Ambiguità: quale `expect`?
 
 ---
 
@@ -280,43 +314,87 @@ Ora il compilatore impedisce errori di scope ✅
 
 # Wrap-up
 
-- Eseguiamo il codice in /end
+- Vediamo la versione completa in /end”
 
 ---
 
 # Confronto
 
 ### Imperativo
+<v-click>
 
 ```kotlin
-if (2 + 2 != 4) error("Expected 4")
+println("Refactor Suite")
+println("After renaming variable")
+val result = refactor("foo" to "bar")
+println("nothing should break")
+if (result.buildStatus != "✅ green") throw Error("Refactoring == Breaking")
 ```
+</v-click>
 
 ### DSL
+<span v-click>
 
 ```kotlin
-test("Calculator") {
-    should("adds numbers") { 
-        2 + 2 shouldBe 4 
+suite("Refactor Suite") {
+    test("After renaming variable") {
+        expect("nothing should break") {
+            refactor("foo" to "bar").buildStatus shouldBe "✅ green"
+        }
     }
 }
 
 ```
-
+</span v-click>
 ---
 
 # Conclusioni
 
 - Espressività
 - Sicurezza
-- Manutebilità
-- Estendibilità (matcher personalizzati, before/after...)
+- Manutenibilità
+- Possibili estensioni (matcher personalizzati, before/after...)
 
 ---
 
 # Q&A
 
-### Domande?
+```kotlin
+while(true) {
+    audience.ask()
+    me.tryAnswer()
+}
+```
 
-- 📂 Repo su GitHub con esempio completo https://github.com/matteovalerio/kotlin-unit-test-dsl
-- 📱 LinkedIn: linkedin.com/in/matteo-valerio-9336611b9/
+<div style="text-align:center; margin-top:1em; font-size:3rem">
+  ❓💬
+</div>
+
+---
+
+# Contatti
+
+<div style="display:flex; justify-content:space-around; margin-top:2em">
+
+<div style="text-align:center">
+  <img src="/qr-code-github.png" style="height:180px"/>
+  <div style="margin-top:10px; color:#7f52ff; font-weight:600">GitHub</div>
+</div>
+
+<div style="text-align:center">
+  <img src="/qr-code-linkedin.png" style="height:180px"/>
+  <div style="margin-top:10px; color:#ff9800; font-weight:600">LinkedIn</div>
+</div>
+
+</div>
+
+---
+
+# Thank you!
+
+```kotlin 
+fun main() = println("Thanks DevFest Venezia ❤️")
+```
+
+
+

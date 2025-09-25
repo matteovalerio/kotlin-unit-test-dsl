@@ -8,9 +8,8 @@ import main.kotlin.end.utils.shouldNotBe
 import main.kotlin.end.utils.shouldThrow
 import java.io.InvalidClassException
 
-
 fun main() {
-    val s = suite("Demo DSL Test") {
+    Runner.run(suite("Demo DSL Test") {
         test("Basic sum tests") {
             expect("1 + 1 should be 2") {
                 1 + 1 shouldBe 2
@@ -26,7 +25,7 @@ fun main() {
                 test.shouldBeNull()
             }
             expect("DevFest should not be null") {
-                "DevFest".shouldNotBe(null)
+                "DevFest" shouldNotBe null
             }
         }
 
@@ -35,7 +34,7 @@ fun main() {
                 "DevFest" shouldContain "est"
             }
             expect("[1,2,3] should contain 3") {
-                listOf(1,2,3) shouldContain 3
+                listOf(1, 2, 3) shouldContain 3
             }
         }
 
@@ -51,7 +50,5 @@ fun main() {
                 }
             }
         }
-    }
-
-    Runner.run(s)
+    })
 }
